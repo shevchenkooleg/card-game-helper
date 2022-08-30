@@ -1,11 +1,16 @@
 import React from 'react';
-import './App.css';
+import './global.css';
 import GameList from "./components/GameList";
+import Header from "./components/Header";
 
 function App() {
 
   return (
-      <GameList/>
+      <>
+        <Header/>
+        <GameList/>
+      </>
+
   );
 }
 

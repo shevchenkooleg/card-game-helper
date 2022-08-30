@@ -3,7 +3,8 @@ import React from 'react';
 const GameList = () => {
     return (
         <div>
-            GameList
+            <p className='font-light'>GameList</p>
+            <button>Add new game</button>
         </div>
     );
 };
