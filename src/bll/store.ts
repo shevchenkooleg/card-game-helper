@@ -2,11 +2,14 @@ import {configureStore} from "@reduxjs/toolkit";
 import thunkMiddleware from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from "redux-thunk";
+import gameListSlice from "./gameListSlice";
+import gameSlice from "./gameSlice";
 
 
 export const store = configureStore({
     reducer: {
-
+        gameList: gameListSlice,
+        singleGame: gameSlice,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(thunkMiddleware)

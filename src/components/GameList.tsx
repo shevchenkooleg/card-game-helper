@@ -1,10 +1,16 @@
 import React from 'react';
+import SingleGame from "./SingleGame";
+import {useAppSelector} from "../bll/store";
 
 const GameList = () => {
+
+    const gamesArr = useAppSelector(state=> state.gameList)
+
     return (
-        <div>
-            <p className='font-light'>GameList</p>
-            <button>Add new game</button>
+        <div className='flex flex-wrap mt-[10px]'>
+            {gamesArr.map((g, k)=>{
+                return <SingleGame gameId={g.gameId} key={k}/>
+            })}
         </div>
     );
 };
