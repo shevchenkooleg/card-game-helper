@@ -11,6 +11,7 @@ const AddNewGame = () => {
     const dispatch = useAppDispatch()
     const formik = useFormik({
         initialValues: {
+            gameName: '',
             '1st-player': '',
             '2nd-player': '',
             '3rd-player': '',
@@ -18,11 +19,16 @@ const AddNewGame = () => {
         // validationSchema: LoginValidationSchema,
         onSubmit: (values, actions) => {
             const gameId = v1()
-            actions.resetForm({values:{'1st-player':'', '2nd-player':'','3rd-player':''}})
+            actions.resetForm({values:{gameName:'', '1st-player':'', '2nd-player':'','3rd-player':''}})
             dispatch(createNewGame({gameId,
+                gameName: formik.values.gameName,
                 firstPlayer: formik.values["1st-player"],
                 secondPlayer: formik.values["2nd-player"],
                 thirdPlayer: formik.values["3rd-player"],}))
+            navigate('/')
+        },
+        onReset: () => {
+            // actions.resetForm({values:{'1st-player':'', '2nd-player':'','3rd-player':''}})
             navigate('/')
         }
     })
@@ -32,6 +38,16 @@ const AddNewGame = () => {
         <div className=''>
             <form onSubmit={formik.handleSubmit}>
                 <div className='flex flex-col items-center'>
+                    <label htmlFor="gameName">Name of New Game</label>
+                    <input type="text" className="input input-bordered w-full max-w-xs"
+                           id="gameName"
+                           name="gameName"
+                           onChange={formik.handleChange}
+                        // status={!!formik.errors.login && formik.touched.login ? 'error' : ''}
+                           placeholder={formik.touched["gameName"] ? formik.errors["gameName"] : ''}
+                           value={formik.values["gameName"]}
+                           style={{width: '200px'}}
+                    />
                     <label htmlFor="1st-player">1st-player</label>
                     <input type="text" className="input input-bordered w-full max-w-xs"
                            id="1st-player"
@@ -65,8 +81,7 @@ const AddNewGame = () => {
                            style={{width: '200px'}}
                     />
                     <button className="btn btn-sm btn-active btn-primary mr-[10px] mt-[10px]" type='submit'>Start</button>
-                    <button className="btn btn-sm btn-active btn-primary mr-[10px] mt-[10px]" type='reset' onClick={()=>{
-                        console.log('yoyoyo')}}>Back</button>
+                    <button className="btn btn-sm btn-active btn-primary mr-[10px] mt-[10px]" type='reset' onClick={formik.handleReset}>Back</button>
                 </div>
 
             </form>
