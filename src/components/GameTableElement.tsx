@@ -31,7 +31,7 @@ const GameTableElement: React.FC<SingleGamePropsType> = ({gameId, onDelete, setM
     if (singleGame) {
         return (
             <>
-                <div className='flex flex-col w-[350px] border m-[10px] rounded-md p-4 relative'>
+                <div className='flex flex-col w-[300px] border m-[10px] rounded-md p-4 relative'>
                     <div className='flex flex-row justify-around'>
                         <div>{gameData && gameData.name}</div>
                         <div>{gameData && gameData.startDate}</div>

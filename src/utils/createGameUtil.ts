@@ -20,6 +20,10 @@ export const createSingleGameObj = (gameId: string, name1: string, name2: string
             scores: 0,
             leader: true,
             falls: 0,
+            barrel: 0,
+            isOnBarrel: false,
+            isWinner: false,
+            justFall: false,
         },
         {
             userName: name2,
@@ -28,6 +32,10 @@ export const createSingleGameObj = (gameId: string, name1: string, name2: string
             scores: 0,
             leader: false,
             falls: 0,
+            barrel: 0,
+            isOnBarrel: false,
+            isWinner: false,
+            justFall: false,
         },
         {
             userName: name3,
@@ -36,6 +44,10 @@ export const createSingleGameObj = (gameId: string, name1: string, name2: string
             scores: 0,
             leader: false,
             falls: 0,
+            barrel: 0,
+            isOnBarrel: false,
+            isWinner: false,
+            justFall: false,
         },
     ]
     console.log(arr)

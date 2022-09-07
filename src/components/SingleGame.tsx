@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../bll/store";
 import SingleGameTableElement from "./SingleGameTableElement";
 import {useNavigate, useParams} from "react-router-dom";
-import { setNewScore, updateLeader } from '../bll/gameSlice';
+import {resetJustFall, setNewScore, updateLeader } from '../bll/gameSlice';
 import { setNewCircle } from '../bll/gameListSlice';
 
 const SingleGame: React.FC = () => {
@@ -23,6 +23,7 @@ const SingleGame: React.FC = () => {
     const onApplyRoundClickHandler = () => {
         for (let i=0;i<singleGameData.length;i++){
             dispatch(setNewScore({gameId, newScores: scoreArr[i], userId: singleGameData[i].userId, index:i}))
+            dispatch(resetJustFall({gameId}))
 
         }
         dispatch(updateLeader({gameId}))
@@ -44,9 +45,9 @@ const SingleGame: React.FC = () => {
         return (
             <div className='m-[20px]'>
                 <div>
-                    Circle  {gameData && gameData.circle}
+                    Round  {gameData && gameData.circle}
                 </div>
-                <div className='mt-[10px] mb-[10px]'>
+                <div className='mt-[20px] mb-[40px]'>
                     {singleGameData.map((g, k)=>{
                         return <SingleGameTableElement singleGameUserData={g} key={k}
                                                        scoreChangeCallback={scoreChangeCallbackArray[k]}

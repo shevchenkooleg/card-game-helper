@@ -46,7 +46,7 @@ const FallsComponent: React.FC<FallsComponentPropsType> = ({singleGameUserData})
     // }
 
     return (
-        <div className='flex'>
+        <div className='flex flex-col'>
             <div className={falls > 0 ? '' : 'opacity-0'}>
                 <BoltIcon />
             </div>
