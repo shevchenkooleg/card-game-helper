@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/card-game-helper/static/css/main.cf4d42a0.css",
-    "main.js": "/card-game-helper/static/js/main.92f1fc18.js",
+    "main.css": "/card-game-helper/static/css/main.0497287e.css",
+    "main.js": "/card-game-helper/static/js/main.4526d21e.js",
     "static/js/787.ce5dd3cf.chunk.js": "/card-game-helper/static/js/787.ce5dd3cf.chunk.js",
     "static/media/Montserrat-Light.eot": "/card-game-helper/static/media/Montserrat-Light.a859c213018cc9fa7eed.eot",
     "static/media/Montserrat-Medium.eot": "/card-game-helper/static/media/Montserrat-Medium.5dcd3247f6824c2758d8.eot",
@@ -16,12 +16,12 @@
     "static/media/Montserrat-Medium.woff2": "/card-game-helper/static/media/Montserrat-Medium.cf734a3745838e63cc2a.woff2",
     "static/media/Montserrat-Light.woff2": "/card-game-helper/static/media/Montserrat-Light.fc7d04bd48b77889f527.woff2",
     "index.html": "/card-game-helper/index.html",
-    "main.cf4d42a0.css.map": "/card-game-helper/static/css/main.cf4d42a0.css.map",
-    "main.92f1fc18.js.map": "/card-game-helper/static/js/main.92f1fc18.js.map",
+    "main.0497287e.css.map": "/card-game-helper/static/css/main.0497287e.css.map",
+    "main.4526d21e.js.map": "/card-game-helper/static/js/main.4526d21e.js.map",
     "787.ce5dd3cf.chunk.js.map": "/card-game-helper/static/js/787.ce5dd3cf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cf4d42a0.css",
-    "static/js/main.92f1fc18.js"
+    "static/css/main.0497287e.css",
+    "static/js/main.4526d21e.js"
   ]
 }
