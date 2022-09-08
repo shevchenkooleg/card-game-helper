@@ -8,6 +8,7 @@ export type UserType = {
     scores: number
     leader: boolean
     falls: number
+    barrelTry: number
     barrel: number
     isOnBarrel: boolean
     isWinner: boolean
@@ -23,22 +24,45 @@ const gameSlice = createSlice({
     initialState: {} as SingleGameType,
     reducers: {
         setNewScore(state, action: PayloadAction<{ gameId: string, userId: string, newScores: number, index: number }>) {
-            if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].falls === 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === true && state[action.payload.gameId][action.payload.index].barrel === 3){
+
+            //слетает с бочки если лажает на прикупе
+            if (action.payload.newScores < 0 && state[action.payload.gameId][action.payload.index].isOnBarrel === true){
+                state[action.payload.gameId][action.payload.index].barrelTry = 0
+                state[action.payload.gameId][action.payload.index].isOnBarrel = false
+                if (state[action.payload.gameId][action.payload.index].barrel !== 3) {
+                    state[action.payload.gameId][action.payload.index].scores = 760
+                } else if (state[action.payload.gameId][action.payload.index].barrel === 3){
+                    state[action.payload.gameId][action.payload.index].scores = 0
+                }
+                // state[action.payload.gameId][action.payload.index].barrel += 1
+
+                //слетает с третьей бочки при трех болтах
+            } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].barrelTry === 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === true && state[action.payload.gameId][action.payload.index].barrel === 3){
                 debugger
-                state[action.payload.gameId][action.payload.index].falls = 0
+                state[action.payload.gameId][action.payload.index].barrelTry = 0
                 state[action.payload.gameId][action.payload.index].scores = 0
                 state[action.payload.gameId][action.payload.index].isOnBarrel = false
-                state[action.payload.gameId][action.payload.index].barrel += 1
-            } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].falls === 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === true){
+                // state[action.payload.gameId][action.payload.index].barrel += 1
+
+                //слетает с бочки при трех болтах
+            } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].barrelTry === 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === true) {
                 debugger
+                state[action.payload.gameId][action.payload.index].barrelTry = 0
                 state[action.payload.gameId][action.payload.index].falls = 0
                 state[action.payload.gameId][action.payload.index].scores = 760
                 state[action.payload.gameId][action.payload.index].isOnBarrel = false
+
+                //получает болт на бочке
+            } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].barrelTry < 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === true) {
+                state[action.payload.gameId][action.payload.index].barrelTry += 1
+
+                //получает третий болт не находясь на бочке
             } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].falls === 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === false && state[action.payload.gameId][action.payload.index].justFall === false){
                 debugger
                 state[action.payload.gameId][action.payload.index].falls = 0
                 state[action.payload.gameId][action.payload.index].scores += -120
-            } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].falls < 2) {
+
+            } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].falls < 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === false && state[action.payload.gameId][action.payload.index].barrel >= 3) {
                 debugger
                 if (state[action.payload.gameId][action.payload.index].justFall===true){
                     debugger
@@ -47,29 +71,55 @@ const gameSlice = createSlice({
                     debugger
                     state[action.payload.gameId][action.payload.index].falls += 1
                 }
+
+                //получает болт не находясь на бочке
+            } else if (action.payload.newScores === 0 && state[action.payload.gameId][action.payload.index].falls < 2 && state[action.payload.gameId][action.payload.index].isOnBarrel === false && state[action.payload.gameId][action.payload.index].scores<880) {
+                debugger
+                if (state[action.payload.gameId][action.payload.index].justFall===true){
+                    debugger
+                    state[action.payload.gameId][action.payload.index].falls = 0
+                } else {
+                    debugger
+                    state[action.payload.gameId][action.payload.index].falls += 1
+                }
+
+                //сбрасываются очки при получении 555
             } else if (state[action.payload.gameId][action.payload.index].scores + action.payload.newScores === 555){
                 state[action.payload.gameId][action.payload.index].scores = 0
                 state[action.payload.gameId][action.payload.index].falls = 0
+
+                //залезает на бочку если бочек менее 3
             } else if (state[action.payload.gameId][action.payload.index].scores + action.payload.newScores >= 880
                 && state[action.payload.gameId][action.payload.index].isOnBarrel === false && state[action.payload.gameId][action.payload.index].barrel < 3){
+
+                //если никого на бочке нет
                 if (state[action.payload.gameId].findIndex(el=>el.isOnBarrel === true) === -1){
                     debugger
                     state[action.payload.gameId][action.payload.index].scores = 880
                     state[action.payload.gameId][action.payload.index].barrel += 1
+                    state[action.payload.gameId][action.payload.index].falls = 0
                     state[action.payload.gameId][action.payload.index].isOnBarrel = true
+
+                    //если кто-то уже на бочке
                 } else {
                     debugger
                     const onCurrentBarrelIndex = state[action.payload.gameId].findIndex((arr)=>arr.isOnBarrel === true)
                     console.log(onCurrentBarrelIndex)
                     state[action.payload.gameId][onCurrentBarrelIndex].justFall = true
+                    state[action.payload.gameId][action.payload.index].falls = 0
+
+                    //сбрасывает с бочки если не с третьей
                     if (state[action.payload.gameId][onCurrentBarrelIndex].barrel !== 3){
                         debugger
                         state[action.payload.gameId][onCurrentBarrelIndex].isOnBarrel = false
                         state[action.payload.gameId][onCurrentBarrelIndex].scores = 760
                         state[action.payload.gameId][onCurrentBarrelIndex].falls = 0
+                        state[action.payload.gameId][onCurrentBarrelIndex].barrelTry = 0
                         state[action.payload.gameId][action.payload.index].barrel += 1
                         state[action.payload.gameId][action.payload.index].scores = 880
                         state[action.payload.gameId][action.payload.index].isOnBarrel = true
+
+                        //сбрасывает с третьей бочки
                     } else {
                         debugger
                         state[action.payload.gameId][onCurrentBarrelIndex].isOnBarrel = false
@@ -77,6 +127,7 @@ const gameSlice = createSlice({
                         state[action.payload.gameId][onCurrentBarrelIndex].justFall = true
                         state[action.payload.gameId][action.payload.index].barrel += 1
                         state[action.payload.gameId][onCurrentBarrelIndex].falls = 0
+                        state[action.payload.gameId][onCurrentBarrelIndex].barrelTry = 0
                         state[action.payload.gameId][action.payload.index].falls = 0
                         state[action.payload.gameId][action.payload.index].scores = 880
                         state[action.payload.gameId][action.payload.index].isOnBarrel = true
@@ -84,6 +135,7 @@ const gameSlice = createSlice({
 
                 }
 
+                //устанавливает победителя
             } else if ((state[action.payload.gameId][action.payload.index].scores + action.payload.newScores >= 1005
                 && state[action.payload.gameId][action.payload.index].isOnBarrel === true) || (state[action.payload.gameId][action.payload.index].scores + action.payload.newScores >= 1005
                 && state[action.payload.gameId][action.payload.index].barrel >= 3)){
